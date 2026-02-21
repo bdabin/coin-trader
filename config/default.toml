@@ -1,0 +1,69 @@
+[app]
+mode = "paper"  # paper | live
+
+[trading]
+initial_krw = 1_000_000
+buy_amount = 100_000
+target_coins = [
+    "KRW-BTC", "KRW-ETH", "KRW-XRP", "KRW-SOL", "KRW-DOGE",
+    "KRW-ADA", "KRW-AVAX", "KRW-LINK", "KRW-DOT", "KRW-MATIC",
+]
+
+[risk]
+stop_loss_pct = -5.0
+take_profit_pct = 10.0
+trailing_stop_pct = 3.0
+max_daily_loss_pct = -3.0
+max_drawdown_pct = -15.0
+max_positions = 5
+fee_rate = 0.05
+
+[strategies.dip_buy]
+enabled = true
+params = { drop_pct = -7, recovery_pct = 2, timeframe_hours = 24 }
+
+[strategies.momentum]
+enabled = true
+params = { lookback_hours = 12, entry_threshold = 5, exit_threshold = -3 }
+
+[strategies.volatility_breakout]
+enabled = true
+params = { k_factor = 0.5 }
+
+[strategies.fear_greed]
+enabled = true
+params = { buy_threshold = 25, sell_threshold = 75 }
+
+[strategies.volume_surge]
+enabled = true
+params = { lookback_hours = 24, volume_multiplier = 3.0 }
+
+[strategies.notice_alpha]
+enabled = true
+params = { keywords = ["신규", "상장", "에어드롭"] }
+
+[strategies.rsi]
+enabled = false  # v1: -58% loss
+
+[strategies.ma_cross]
+enabled = false  # v1: -34% loss
+
+[strategies.bollinger]
+enabled = false  # v1: -75% loss
+
+[ai]
+opus_model = "claude-opus-4-6"
+codex_model = "codex-5.3"
+
+[database]
+postgres_dsn = "postgresql://trader:trader_local@localhost:5432/coin_trader"
+
+[redis]
+url = "redis://localhost:6379"
+
+[graph]
+falkordb_host = "localhost"
+falkordb_port = 6380
+
+[websocket]
+reconnect_interval = 5
