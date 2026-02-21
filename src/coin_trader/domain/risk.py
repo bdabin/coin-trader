@@ -30,8 +30,9 @@ class DailyPnL:
 class RiskManager:
     """Enforces risk rules on trading decisions."""
 
-    def __init__(self, config: RiskConfig) -> None:
+    def __init__(self, config: RiskConfig, initial_krw: Decimal = Decimal("1000000")) -> None:
         self.config = config
+        self.initial_krw = initial_krw
         self.daily_pnl = DailyPnL()
 
     def _reset_daily_if_needed(self) -> None:
@@ -69,8 +70,10 @@ class RiskManager:
             )
 
         # Daily loss limit
-        initial = Decimal("1000000")
-        daily_loss_pct = float(self.daily_pnl.realized_pnl / initial * 100) if initial else 0.0
+        daily_loss_pct = (
+            float(self.daily_pnl.realized_pnl / self.initial_krw * 100)
+            if self.initial_krw else 0.0
+        )
         if daily_loss_pct <= self.config.max_daily_loss_pct:
             return RiskCheck(
                 allowed=False,
@@ -79,7 +82,7 @@ class RiskManager:
 
         # Max drawdown
         if portfolio.total_trades > 0:
-            return_pct = float(portfolio.total_profit / initial * 100)
+            return_pct = float(portfolio.total_profit / self.initial_krw * 100)
             if return_pct <= self.config.max_drawdown_pct:
                 return RiskCheck(
                     allowed=False,

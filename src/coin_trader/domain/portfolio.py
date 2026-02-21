@@ -96,7 +96,13 @@ class PortfolioManager:
         fee = gross_krw * Decimal(str(self.fee_rate))
         net_krw = gross_krw - fee
 
-        cost = position.quantity * position.entry_price
+        # Cost basis includes buy-side fee: quantity came from (krw - buy_fee) / price,
+        # so the true cost is the full KRW amount spent (quantity * entry_price + buy_fee).
+        # Simplified: cost = quantity * entry_price / (1 - fee_rate)
+        raw_cost = position.quantity * position.entry_price
+        fee_dec = Decimal(str(self.fee_rate))
+        buy_fee = raw_cost * fee_dec / (Decimal("1") - fee_dec)
+        cost = raw_cost + buy_fee
         profit = net_krw - cost
         profit_pct = float(profit / cost * 100) if cost > 0 else 0.0
 

@@ -130,16 +130,13 @@ class ExecutionEngine:
         open_positions = self.portfolio.get_open_positions()
         has_position = ticker in open_positions
 
-        data: Dict[str, Any] = {
+        # Start with all tick data, then overlay engine-computed fields
+        data: Dict[str, Any] = dict(tick)
+        data.update({
             "current_price": tick.get("price", 0),
-            "volume": tick.get("volume", 0),
-            "change_pct": tick.get("change_pct", 0),
-            "high_price": tick.get("high_price", 0),
-            "low_price": tick.get("low_price", 0),
             "has_position": has_position,
             "entry_price": 0,
-            "price_history": tick.get("price_history", []),
-        }
+        })
 
         if has_position:
             data["entry_price"] = float(open_positions[ticker].entry_price)
