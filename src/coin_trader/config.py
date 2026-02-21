@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
-from typing import Any
+from typing import Any, Dict, List, Optional
 
 import tomli
 from pydantic import Field
@@ -14,7 +14,7 @@ _PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 _DEFAULT_TOML = _PROJECT_ROOT / "config" / "default.toml"
 
 
-def _load_toml(path: Path) -> dict[str, Any]:
+def _load_toml(path: Path) -> Dict[str, Any]:
     if not path.exists():
         return {}
     with open(path, "rb") as f:
@@ -33,13 +33,13 @@ class RiskConfig(BaseSettings):
 
 class StrategyParams(BaseSettings):
     enabled: bool = False
-    params: dict[str, Any] = Field(default_factory=dict)
+    params: Dict[str, Any] = Field(default_factory=dict)
 
 
 class TradingConfig(BaseSettings):
     initial_krw: int = 1_000_000
     buy_amount: int = 100_000
-    target_coins: list[str] = Field(
+    target_coins: List[str] = Field(
         default_factory=lambda: [
             "KRW-BTC", "KRW-ETH", "KRW-XRP", "KRW-SOL", "KRW-DOGE",
             "KRW-ADA", "KRW-AVAX", "KRW-LINK", "KRW-DOT", "KRW-MATIC",
@@ -73,7 +73,7 @@ class AppConfig(BaseSettings):
     mode: str = "paper"
     trading: TradingConfig = Field(default_factory=TradingConfig)
     risk: RiskConfig = Field(default_factory=RiskConfig)
-    strategies: dict[str, StrategyParams] = Field(default_factory=dict)
+    strategies: Dict[str, StrategyParams] = Field(default_factory=dict)
     database: DatabaseConfig = Field(default_factory=DatabaseConfig)
     redis: RedisConfig = Field(default_factory=RedisConfig)
     graph: GraphConfig = Field(default_factory=GraphConfig)
@@ -88,7 +88,7 @@ class AppConfig(BaseSettings):
     lunarcrush_api_key: str = ""
 
 
-def load_config(toml_path: Path | None = None) -> AppConfig:
+def load_config(toml_path: Optional[Path] = None) -> AppConfig:
     """Load config from TOML file with .env overrides."""
     toml_path = toml_path or _DEFAULT_TOML
     raw = _load_toml(toml_path)
@@ -103,7 +103,7 @@ def load_config(toml_path: Path | None = None) -> AppConfig:
     ws_raw = raw.get("websocket", {})
     ai_raw = raw.get("ai", {})
 
-    strategy_configs: dict[str, StrategyParams] = {}
+    strategy_configs: Dict[str, StrategyParams] = {}
     for name, cfg in strategies_raw.items():
         strategy_configs[name] = StrategyParams(**cfg)
 
