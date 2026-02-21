@@ -4,9 +4,7 @@ from __future__ import annotations
 
 from decimal import Decimal
 
-import pytest
-
-from coin_trader.domain.models import Portfolio, Position, PositionStatus
+from coin_trader.domain.models import Portfolio, Position
 from coin_trader.reporting.daily_report import DailyReport
 from coin_trader.reporting.leaderboard import Leaderboard
 

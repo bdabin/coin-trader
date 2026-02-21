@@ -3,8 +3,6 @@
 from __future__ import annotations
 
 import asyncio
-from decimal import Decimal
-from typing import Optional
 
 import structlog
 import typer
@@ -20,8 +18,14 @@ logger = structlog.get_logger()
 def _get_strategies(config):
     """Instantiate enabled strategies from config."""
     # Import strategies to trigger registration
-    from coin_trader.strategies import dip_buy, fear_greed, momentum  # noqa: F401
-    from coin_trader.strategies import notice_alpha, volatility_breakout, volume_surge  # noqa: F401
+    from coin_trader.strategies import (  # noqa: F401  # noqa: F401
+        dip_buy,
+        fear_greed,
+        momentum,
+        notice_alpha,
+        volatility_breakout,
+        volume_surge,
+    )
     from coin_trader.strategies.registry import create_strategy
 
     strategies = []
@@ -130,8 +134,8 @@ def ai_cmd(
         console.print("[red]ANTHROPIC_API_KEY not set[/red]")
         raise typer.Exit(1)
 
-    from coin_trader.ai.orchestrator import AIOrchestrator
     from coin_trader.ai.opus_analyst import OpusAnalyst
+    from coin_trader.ai.orchestrator import AIOrchestrator
 
     opus = OpusAnalyst(api_key=config.anthropic_api_key, model=config.ai.opus_model)
     orchestrator = AIOrchestrator(opus=opus)

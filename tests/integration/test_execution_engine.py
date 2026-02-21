@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 from decimal import Decimal
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 import pytest
 
-from coin_trader.config import AppConfig, RiskConfig, TradingConfig, load_config
+from coin_trader.config import load_config
 from coin_trader.domain.models import Portfolio, Signal, SignalType
 from coin_trader.domain.portfolio import PortfolioManager
 from coin_trader.domain.risk import RiskManager

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 import structlog
 
@@ -35,8 +35,6 @@ class VolatilityBreakoutStrategy(Strategy):
     ) -> Optional[Signal]:
         current_price: float = market_data.get("current_price", 0)
         has_position: bool = market_data.get("has_position", False)
-        high_price: float = market_data.get("high_price", 0)
-        low_price: float = market_data.get("low_price", 0)
         open_price: float = market_data.get("open_price", 0)
         prev_high: float = market_data.get("prev_high", 0)
         prev_low: float = market_data.get("prev_low", 0)

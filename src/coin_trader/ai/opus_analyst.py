@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-import json
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 
 import structlog
 

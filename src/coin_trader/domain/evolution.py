@@ -2,9 +2,8 @@
 
 from __future__ import annotations
 
-import json
 import random
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 import structlog
 
@@ -80,7 +79,8 @@ class StrategyEvolver:
 
             lines.append("\nCommon ancestor parameters:")
             for a in ancestors[:3]:
-                lines.append(f"  - {a['id']}: {a['params']} ({a['successful_descendants']} descendants)")
+                desc = a['successful_descendants']
+                lines.append(f"  - {a['id']}: {a['params']} ({desc} descendants)")
 
             return "\n".join(lines)
         except Exception as e:

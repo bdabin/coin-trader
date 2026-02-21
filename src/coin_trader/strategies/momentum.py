@@ -29,7 +29,9 @@ class MomentumStrategy(Strategy):
 
     @property
     def name(self) -> str:
-        return f"momentum_{self.lookback_hours}_{int(self.entry_threshold)}_{int(self.exit_threshold)}"
+        entry = int(self.entry_threshold)
+        exit_ = int(self.exit_threshold)
+        return f"momentum_{self.lookback_hours}_{entry}_{exit_}"
 
     @property
     def template(self) -> str:

@@ -140,9 +140,10 @@ class PortfolioManager:
         """Update highest price for trailing stop tracking."""
         if ticker in self.portfolio.positions:
             pos = self.portfolio.positions[ticker]
-            if pos.status == PositionStatus.OPEN:
-                if pos.highest_price is None or price > pos.highest_price:
-                    pos.highest_price = price
+            if pos.status == PositionStatus.OPEN and (
+                pos.highest_price is None or price > pos.highest_price
+            ):
+                pos.highest_price = price
 
     def get_open_positions(self) -> Dict[str, Position]:
         """Return all open positions."""

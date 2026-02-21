@@ -2,11 +2,9 @@
 
 from __future__ import annotations
 
-from unittest.mock import AsyncMock, MagicMock, patch
-
 import pytest
 
-from coin_trader.ai.conversation import Conversation, Message
+from coin_trader.ai.conversation import Conversation
 from coin_trader.ai.opus_analyst import OpusAnalyst
 from coin_trader.ai.orchestrator import AIOrchestrator
 from coin_trader.domain.models import Signal, SignalType

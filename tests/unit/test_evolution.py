@@ -21,7 +21,7 @@ class TestMutation:
         params = {"drop_pct": -7, "recovery_pct": 2, "timeframe_hours": 24}
         mutated = evolver.mutate_params(params, mutation_rate=1.0)
         # At least one param should change
-        assert mutated != params or True  # Mutation is probabilistic
+        # Mutation is probabilistic with seed, just verify bounds
         # Bounds should be enforced
         assert -15 <= mutated["drop_pct"] <= -2
         assert 1 <= mutated["recovery_pct"] <= 10

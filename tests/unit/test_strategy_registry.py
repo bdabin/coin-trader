@@ -4,12 +4,6 @@ from __future__ import annotations
 
 import pytest
 
-from coin_trader.strategies.registry import (
-    create_strategy,
-    get_strategy_class,
-    list_strategies,
-)
-
 # Import strategies to trigger registration
 from coin_trader.strategies import (  # noqa: F401
     dip_buy,
@@ -18,6 +12,11 @@ from coin_trader.strategies import (  # noqa: F401
     notice_alpha,
     volatility_breakout,
     volume_surge,
+)
+from coin_trader.strategies.registry import (
+    create_strategy,
+    get_strategy_class,
+    list_strategies,
 )
 
 

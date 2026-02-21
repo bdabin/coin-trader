@@ -3,15 +3,10 @@
 from __future__ import annotations
 
 from decimal import Decimal
-from typing import Any, Dict, List, Optional
 
 import pytest
 
 from coin_trader.config import load_config
-from coin_trader.domain.models import Portfolio, Signal, SignalType
-from coin_trader.domain.portfolio import PortfolioManager
-from coin_trader.domain.risk import RiskManager
-from coin_trader.execution.engine import ExecutionEngine
 from coin_trader.execution.paper import PaperTrader
 from coin_trader.reporting.daily_report import DailyReport
 from coin_trader.strategies.dip_buy import DipBuyStrategy

@@ -2,8 +2,6 @@
 
 from decimal import Decimal
 
-import pytest
-
 from coin_trader.domain.models import (
     Portfolio,
     Position,
@@ -11,7 +9,6 @@ from coin_trader.domain.models import (
     Signal,
     SignalType,
 )
-from coin_trader.domain.risk import RiskManager
 
 
 class TestRiskManagerBuy:
